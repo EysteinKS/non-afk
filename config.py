@@ -1,0 +1,1 @@
+app_path = r"X:\Spill\World of Warcraft\_classic_\Wow.exe"

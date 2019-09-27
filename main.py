@@ -4,7 +4,7 @@ from pywinauto import application, findwindows
 
 import os
 import random
-
+import time
 
 scheduler = BlockingScheduler()
 
@@ -33,10 +33,14 @@ class Job:
 process = Process()
 job = Job()
 
+min_time = 300
+max_time = 800
+
 def get_random_key():
   keys = ["w", "s", Key.space]
-  key = random.randint(0, 2)
-  return keys[key]
+  #key = random.randint(0, 2)
+  key = keys[2]
+  return key
 
 
 def press_key(key):
@@ -48,8 +52,6 @@ def press_key(key):
 def focus_window():
   app = application.Application()
   id = process.get_id()
-  print("process id: ", id)
-  print(application.process_module(id))
   app.connect(process=id)
   app["World of Warcraft"].set_focus()
 
@@ -62,7 +64,7 @@ def focus_window_and_press_key():
 
 
 def get_interval_time():
-  time = random.randint(60, 290)
+  time = random.randint(300, 800) #1200 = less than 30 min
   print("Job interval is {0} seconds".format(time))
   return time
 
@@ -79,8 +81,6 @@ def start_new_job():
 
 def run_scheduler():
   add_scheduler_job()
-  print("Press CTRL+{0} to exit".format("Break" if os.name == "nt" else "C"))
-
   try:
     scheduler.start()
   except(KeyboardInterrupt, SystemExit):
